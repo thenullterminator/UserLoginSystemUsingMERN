@@ -1,0 +1,4 @@
+backend/node_modules
+backend/server/config/config.json
+frontend/node_modules
+node_modules
