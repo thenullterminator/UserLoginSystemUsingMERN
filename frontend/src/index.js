@@ -1,18 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import './index.css';
+
 import {BrowserRouter as Router,Route} from 'react-router-dom';
 import Home from './pages/home';
 import Login from './pages/login';
 import Logout from './pages/logout';
 import Dash from './pages/dashboard';
 import Signup from './pages/signup';
-import * as serviceWorker from './serviceWorker';
+
+import './styles/base/style.scss';
+
+import Landing from './pages/Landing'
 
 ReactDOM.render(
     <div>    
         <Router>
             <Route path='/' exact component={Home} />
+            <Route path='/landing' exact component={Landing} />
             <Route path='/dashboard' exact component={Dash} />
             <Route path='/login' exact component={Login} />
             <Route path='/signup' exact component={Signup} />

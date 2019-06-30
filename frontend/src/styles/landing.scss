@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+#landingpage
+{
+    height: 100vh;
+    background:url('../assets/img3.jpg') no-repeat center center fixed;
+    -webkit-background-size:cover;
+    background-size: cover;
+    filter:contrast(1.2) brightness(0.9) opacity(0.9);
+}
+    
+.title
+{
+    color:rgb(255, 255, 255);
+    font-size:5vw;
+    font-family: 'Montserrat', sans-serif;
+    text-shadow: 2px 1px rgb(126, 122, 122);
+    letter-spacing: -0.3vw;
+    width:27%;
+    // background-color: red;
+    margin:0 auto;
+    position:relative;
+    top:28%;
+
+    backdrop-filter: blur(3px);
+
+}
+
+.arrow
+{
+    // background-color:red;
+    width:4%;
+    margin:0 auto;
+    position:relative;
+    top:30%;
+    cursor:pointer;
+}
