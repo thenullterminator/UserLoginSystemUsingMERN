@@ -1,11 +1,14 @@
+// Importing third party modules.
 import React from 'react';
-import '../styles/landing.scss';
 import {Animated} from "react-animated-css";
-import arrow from '../assets/arrow2.png';
 import {Redirect} from 'react-router-dom';
 
-export default class landing extends React.Component{
+// Importing styles.
+import '../styles/landing.scss';
 
+class landing extends React.Component{
+
+    // Setting up state for moving to other pages.
     state={
         clicked:false
     };
@@ -16,26 +19,36 @@ export default class landing extends React.Component{
         });
     };
     
-
     render(){
         return (
-            <div id="landingpage">
+            <div id="landing-page">
                 
-                
-                <Animated className='title' animationIn="fadeInLeft" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={1400} isVisible={true}>
-                    <div >
-                        Welcome !
-                    </div>
-                </Animated>  
-    
-                <Animated className='arrow' animationIn="fadeIn" animationOut="fadeOut" animationInDuration={7000} animationOutDuration={1400} isVisible={true}>
-                    <div>
-                        <img onClick={this.toggle} src={arrow} alt='icon'></img>
-                    </div>
-                </Animated>        
-    
+                <div id="main-content">
+
+                    <Animated className='title' animationIn="fadeInLeft" animationOut="fadeOut" animationInDuration={2000} animationOutDuration={1400} isVisible={true}>
+
+                        <div onClick={this.toggle}>
+                            Welcome !
+                        </div>
+
+                    </Animated>  
+                    
+                    <Animated  className='icon-cover'  animationIn="fadeIn" animationOut="fadeOut" animationInDuration={7000} animationOutDuration={1400} isVisible={true}>
+
+                       <div onClick={this.toggle} >
+                            <i className='icon fas fa-arrow-alt-circle-right'></i>
+                       </div>
+
+                    </Animated>  
+
+                </div>
+
                 {this.state.clicked && <Redirect to='/'/>}
+                {/* Redirecting on click */}
+
             </div>
         );
-    }
+    };
 }
+
+export default  landing;

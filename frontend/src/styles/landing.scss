@@ -1,36 +1,54 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-#landingpage
+// Importing font style.
+@import url('https://fonts.googleapis.com/css?family=Acme&display=swap');
+
+#landing-page
 {
-    height: 100vh;
     background:url('../assets/img3.jpg') no-repeat center center fixed;
     -webkit-background-size:cover;
     background-size: cover;
+
+    height: 100vh;
+    padding:16%;
+
     filter:contrast(1.2) brightness(0.9) opacity(0.9);
+}
+
+#main-content
+{   
+    display: table;
+    margin: 0 auto;
 }
     
 .title
 {
     color:rgb(255, 255, 255);
-    font-size:5vw;
-    font-family: 'Montserrat', sans-serif;
-    text-shadow: 2px 1px rgb(126, 122, 122);
-    letter-spacing: -0.3vw;
-    width:27%;
-    // background-color: red;
-    margin:0 auto;
-    position:relative;
-    top:28%;
-
-    backdrop-filter: blur(3px);
-
+    font-size:6vw;
+    font-family: 'Acme', sans-serif;
+    text-shadow: 2px 1px rgb(121, 111, 112);
+    letter-spacing: -0.2vw;
 }
 
-.arrow
-{
-    // background-color:red;
-    width:4%;
+.icon-cover{
+    display: table;
     margin:0 auto;
-    position:relative;
-    top:30%;
-    cursor:pointer;
+}
+.icon
+{
+   cursor:pointer;
+   font-size:4vw;
+   color:white; 
+   text-shadow: 3px 1px rgb(121, 116, 117);
+}
+
+@media only screen and (max-width: 45rem)
+{
+    #landing-page{
+        padding-top:56%;
+    }
+    .icon{
+        font-size:12vw;
+    }
+    .title{
+        font-size:16.5vw;
+    }
 }
