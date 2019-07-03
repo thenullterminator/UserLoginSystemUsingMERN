@@ -1,42 +1,48 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import { Alert,Nav,ButtonToolbar,Card,InputGroup, Col,Button,Form} from 'react-bootstrap';
 import zxcvbn from 'zxcvbn';
-import '../styles/signup-login.scss';
-import {Link} from 'react-router-dom';
+import '../styles/login.scss';
+import axios from 'axios';
 export default class FormExample extends React.Component {
     
   
     state =
     { 
         validated: false ,
-        passwordmatch:true,
-        passwordScore:0,
-        passwordSuggestions:[],
-        passwordweak:false
+        redirect:false,
+        invalid:false
     };
     
   
     handleSubmit=(event) =>{
 
       const form = event.currentTarget;
+      event.preventDefault();
+      event.stopPropagation();
 
-      if (form.checkValidity() === false) 
-      {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      else if(form.elements.password.value !== form.elements.confirmPassword.value)
-      {
-        event.preventDefault();
-        event.stopPropagation();
-        this.setState({ passwordmatch: false });
-      }
-      else if(this.state.passwordScore<3)
-      {
-        event.preventDefault();
-        event.stopPropagation();
-        this.setState({ passwordweak: true });
-      }
+    if(form.elements.username.value!=='' && form.elements.password.value!=='')
+
+        axios({
+            method:'POST',
+            url:'/login',
+            data:{
+                username:form.elements.username.value,
+                password:form.elements.password.value
+            }
+        }).then((response)=>{
+
+            if(response.data.invalid)
+            {
+                this.setState({ invalid: true });
+            }
+            else
+            {
+                this.setState({ redirect: true });
+            }
+        }).catch(e=>console.log(e));
+
+      
       this.setState({ validated: true });
     };
 
@@ -56,17 +62,17 @@ export default class FormExample extends React.Component {
 
       return (
 
-        <div id="back-ground">
+        <div id="back-ground-login">
 
-            <Card border="dark"  id='main-content'>
+            <Card border="dark"  id='main-content-login' >
 
                 <Card.Header>
                     <Nav variant="tabs" >
                         <Nav.Item>
-                            <Nav.Link ><h4 className='header header-color'><Link to='/signup' style={{ textDecoration: 'none' }}>Sign Up</Link></h4></Nav.Link>
+                            <Nav.Link href='/signup'  ><h4 className='header '>sign up</h4></Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link active ><h4 className='header'>Log In</h4></Nav.Link>
+                            <Nav.Link active ><h4 className='header'>log in</h4></Nav.Link>
                         </Nav.Item>
                     </Nav>
                 </Card.Header>
@@ -82,8 +88,6 @@ export default class FormExample extends React.Component {
                     noValidate
                     validated={validated}
                     onSubmit={e => this.handleSubmit(e)}
-                    method='POST'
-                    action='/login'
                     >
                         
 
@@ -103,7 +107,7 @@ export default class FormExample extends React.Component {
                                     name="username"
                                     />
                                     <Form.Control.Feedback type="invalid">
-                                    Please choose a username.
+                                    Please enter a username.
                                     </Form.Control.Feedback>
                                 </InputGroup>
 
@@ -124,35 +128,18 @@ export default class FormExample extends React.Component {
                             </Form.Group>
 
                         </Form.Row>
-
-
-                        <Form.Row>
-                            {
-                                this.state.passwordweak && 
-
-                                <Alert  variant='danger' dismissible>
-                                    Password too weak!
-                                </Alert>
-                            }
-                        </Form.Row>
-
                     
                         <Form.Row>
                             {
-                                !this.state.passwordmatch && 
+                                this.state.invalid && 
 
-                                <Alert  variant='danger' dismissible>
-                                    Password and Confirm password fields should match!
+                                <Alert  variant='danger' >
+                                    Incorrect Username-Password combination
                                 </Alert>
                             }
                         </Form.Row>
 
-                        
-                       
-                        
-                        
-                        
-
+                            {this.state.redirect && <Redirect to='/dashboard'/>}
                             <Button variant="outline-primary" size="lg" block type='submit'>
                                 Submit
                             </Button>

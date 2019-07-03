@@ -37,6 +37,7 @@ passport.use(new localstrategy((username,password,done)=>{
     UserModel.findOne({username:username}).then((user)=>{
         
         if(!user){
+            
             return done(null,false,{message:'User Name not registered.'});
         }
 
@@ -73,7 +74,7 @@ app.post('/signup',(req,res)=>{
 
     // Saving to the Database.
     NewUser.save().then((credentials)=>{
-        res.redirect('/dashboard');
+        res.redirect('/login');
     }).catch((e)=>{
         res.status(400).send(e);
     });
@@ -81,11 +82,33 @@ app.post('/signup',(req,res)=>{
 });
 
 // Setting up login route.
-app.post('/login',passport.authenticate('local'),(req,res)=>{
-    res.redirect('/dashboard');
+app.post('/login',(req,res)=>{
+
+    passport.authenticate('local', (err, user, info)=> {
+        console.log(user);
+        if (err) { return next(err); }
+
+        if (!user) { 
+            console.log('here');
+            return res.send({invalid:true}); 
+        }
+
+        req.logIn(user, (err)=> {
+          if (err) { return next(err); }
+          return res.send({invalid:false}); 
+        });
+      })(req,res);
+
 });
 
-// Setting up profile route
+
+// Setting up logout route.
+app.get('/logout',(req,res)=>{
+    req.logout();
+    res.redirect('/');
+});
+
+// Setting up profile route for dashboard
 app.post('/userprofile',(req,res)=>{
     if(req.user){
     res.send(req.user);
@@ -94,6 +117,8 @@ app.post('/userprofile',(req,res)=>{
     }
 });
 
+
+
 //Setting up home route.
 app.post('/',(req,res)=>{
     
@@ -101,11 +126,24 @@ app.post('/',(req,res)=>{
     res.send();
 });
 
-// Setting up logout route.
-app.get('/logout',(req,res)=>{
-    req.logout();
-    res.redirect('/');
+// Setting up a route to check if a username is already registerd.
+app.post('/checkusername',(req,res)=>{
+
+    UserModel.findOne({username:req.body.username}).then((user)=>{
+        if(user)
+        {
+            res.send({exist:true});
+        }
+        else
+        {
+            res.send({exist:false});
+        }
+    }).catch((e)=>{
+        res.status(400).send(e);
+    });
+
 });
+
 
 // setting up port.
 app.listen(process.env.PORT,()=>{

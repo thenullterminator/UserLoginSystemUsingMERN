@@ -1,9 +1,8 @@
 import React from 'react';
 import { OverlayTrigger,Popover,Alert,Nav,ButtonToolbar,Card,InputGroup, Col,Button,Form} from 'react-bootstrap';
 import zxcvbn from 'zxcvbn';
-import '../styles/signup-login.scss';
-import {Link} from 'react-router-dom';
-
+import '../styles/signup.scss';
+import axios from 'axios';
 export default class FormExample extends React.Component {
     
   
@@ -13,32 +12,54 @@ export default class FormExample extends React.Component {
         passwordmatch:true,
         passwordScore:0,
         passwordSuggestions:[],
-        passwordweak:false
+        passwordweak:false,
+        usernameexist:false
     };
     
   
     handleSubmit=(event) =>{
+        
+        
+        const form = event.currentTarget;
+        if(!this.state.validated || !form.checkValidity())
+        {
 
-      const form = event.currentTarget;
+            event.preventDefault();
+            event.stopPropagation();
+            if(form.elements.password.value !== form.elements.confirmPassword.value)
+            {
+                this.setState({ passwordmatch: false });
+            }
+            else if(this.state.passwordScore<3)
+            {
+                this.setState({ passwordweak: true });
+            }
+            else
+            {
+                axios({
+                    method:'POST',
+                    url:'/checkusername',
+                    data:{
+                        username:form.elements.username.value
+                    }
+                }).then((response)=>{
 
-      if (form.checkValidity() === false) 
-      {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      else if(form.elements.password.value !== form.elements.confirmPassword.value)
-      {
-        event.preventDefault();
-        event.stopPropagation();
-        this.setState({ passwordmatch: false });
-      }
-      else if(this.state.passwordScore<3)
-      {
-        event.preventDefault();
-        event.stopPropagation();
-        this.setState({ passwordweak: true });
-      }
-      this.setState({ validated: true });
+                    if(response.data.exist)
+                    {
+                        this.setState({ usernameexist: true });
+                    }
+                    else
+                    {
+                        this.setState({ validated: true });
+                        form.submit();
+                    }
+
+                }).catch(e=>console.log(e));
+
+            }
+                
+        }
+    
     };
 
     handlePassword=(e)=>{
@@ -57,17 +78,17 @@ export default class FormExample extends React.Component {
 
       return (
 
-        <div id="back-ground">
+        <div id="back-ground-signup">
 
-            <Card border="dark"  id='main-content'>
+            <Card border="dark"  id='main-content-signup'>
 
                 <Card.Header>
                     <Nav variant="tabs">
                         <Nav.Item>
-                            <Nav.Link  active><h4 className='header header-color'>Sign Up</h4></Nav.Link>
+                            <Nav.Link  active><h4 className='header header-color'>sign up</h4></Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link ><h4 className='header'> <Link to='/login' style={{ textDecoration: 'none' }}>Log In</Link></h4></Nav.Link>
+                            <Nav.Link  href='/login'><h4 className='header'> log in</h4></Nav.Link>
                         </Nav.Item>
                     </Nav>
                 </Card.Header>
@@ -224,7 +245,7 @@ export default class FormExample extends React.Component {
                             {
                                 this.state.passwordweak && 
 
-                                <Alert  variant='danger' dismissible>
+                                <Alert  variant='danger' >
                                     Password too weak!
                                 </Alert>
                             }
@@ -235,8 +256,18 @@ export default class FormExample extends React.Component {
                             {
                                 !this.state.passwordmatch && 
 
-                                <Alert  variant='danger' dismissible>
+                                <Alert  variant='danger' >
                                     Password and Confirm password fields should match!
+                                </Alert>
+                            }
+                        </Form.Row>
+
+                        <Form.Row>
+                            {
+                                this.state.usernameexist && 
+
+                                <Alert  variant='danger' >
+                                    Username already taken
                                 </Alert>
                             }
                         </Form.Row>
