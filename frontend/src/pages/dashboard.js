@@ -21,7 +21,7 @@ export default class Dashboard extends React.Component{
             {
                 this.setState({
                     auth:'true',
-                    name:response.data.name
+                    name:response.data.firstName
                 });
             }
             else

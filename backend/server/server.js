@@ -32,19 +32,17 @@ app.use(passport.session());
 app.use(flash());
 
 // Configuring passport local strategy.
-passport.use(new localstrategy({
-    usernameField:'email',
-    passwordField:'password'
-},(email,password,done)=>{
-    
-    UserModel.findOne({email}).then((user)=>{
+passport.use(new localstrategy((username,password,done)=>{
+   
+    UserModel.findOne({username:username}).then((user)=>{
+        
         if(!user){
-            return done(null,false,{message:'Email not registered.'});
+            return done(null,false,{message:'User Name not registered.'});
         }
 
         bcrypt.compare(password,user.password,(err,res)=>{
             if(res){
-                console.log(user);
+                
                 return done(null,user);
             }
             else{
@@ -70,7 +68,7 @@ passport.deserializeUser((id,done)=>{
 app.post('/signup',(req,res)=>{
 
     
-    let body=_.pick(req.body,['name','email','password']);//Picking up name,email and password property from request body.
+    let body=_.pick(req.body,['firstName','lastName','username','email','password']);//Picking up name,email and password property from request body.
     let NewUser=new UserModel(body);//Creating a new instance of User Model
 
     // Saving to the Database.

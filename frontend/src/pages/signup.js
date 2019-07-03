@@ -1,7 +1,8 @@
 import React from 'react';
 import { OverlayTrigger,Popover,Alert,Nav,ButtonToolbar,Card,InputGroup, Col,Button,Form} from 'react-bootstrap';
 import zxcvbn from 'zxcvbn';
-import '../styles/signup.scss';
+import '../styles/signup-login.scss';
+import {Link} from 'react-router-dom';
 
 export default class FormExample extends React.Component {
     
@@ -61,12 +62,12 @@ export default class FormExample extends React.Component {
             <Card border="dark"  id='main-content'>
 
                 <Card.Header>
-                    <Nav variant="tabs" defaultActiveKey="#first">
+                    <Nav variant="tabs">
                         <Nav.Item>
-                            <Nav.Link href="#first"><h4 className='header header-color'>Sign Up</h4></Nav.Link>
+                            <Nav.Link  active><h4 className='header header-color'>Sign Up</h4></Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href="#link"><h4 className='header'>Log In</h4></Nav.Link>
+                            <Nav.Link ><h4 className='header'> <Link to='/login' style={{ textDecoration: 'none' }}>Log In</Link></h4></Nav.Link>
                         </Nav.Item>
                     </Nav>
                 </Card.Header>
@@ -128,7 +129,7 @@ export default class FormExample extends React.Component {
                                     placeholder="Username"
                                     aria-describedby="inputGroupPrepend"
                                     required
-                                    name="userName"
+                                    name="username"
                                     />
                                     <Form.Control.Feedback type="invalid">
                                     Please choose a username.

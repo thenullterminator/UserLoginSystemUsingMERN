@@ -5,16 +5,26 @@ const bcrypt=require('bcryptjs');
 // Creating new User Schema.
 const UserSchema=new mongoose.Schema({
 
-    name:{
+    firstName:{
         type:String,
         required:true,
         trim:true,
     },
+    lastName:{
+        type:String,
+        required:true,
+        trim:true,
+    },
+    username:{
+        type:String,
+        required:true,
+        trim:true,
+        unique:true,
+    },
     email:{
         type:String,
-        unique:true,
         required:true,
-        minlength:5,
+        minlength:2,
         trim:true,
         validate:{
             validator:validator.isEmail,
@@ -24,7 +34,6 @@ const UserSchema=new mongoose.Schema({
     password:{
         type:String,
         require:true,
-        minlength:6
     }
 });
 
