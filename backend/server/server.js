@@ -69,6 +69,7 @@ passport.deserializeUser((id,done)=>{
 //Setting up a signup route
 app.post('/signup',(req,res)=>{
 
+    
     let body=_.pick(req.body,['name','email','password']);//Picking up name,email and password property from request body.
     let NewUser=new UserModel(body);//Creating a new instance of User Model
 
@@ -96,9 +97,10 @@ app.post('/userprofile',(req,res)=>{
 });
 
 //Setting up home route.
-app.get('/',(req,res)=>{
+app.post('/',(req,res)=>{
     
-    res.send(`Welcome!`);
+    console.log(req.body);
+    res.send();
 });
 
 // Setting up logout route.

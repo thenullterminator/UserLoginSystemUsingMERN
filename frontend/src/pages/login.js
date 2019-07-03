@@ -8,7 +8,7 @@ export default class App extends React.Component{
       <div>
        
         <h3>Login </h3>
-        <form method='POST' action='/login'>
+        <form method='POST' action='/login' >
         <div>
             <label>email:</label>
             <input type="email" name="email"/>

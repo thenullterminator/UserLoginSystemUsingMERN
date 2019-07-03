@@ -8,10 +8,15 @@ import Login from './pages/login';
 import Logout from './pages/logout';
 import Dash from './pages/dashboard';
 import Signup from './pages/signup';
+import Landing from './pages/Landing'
+
+
 
 import './styles/base/style.scss';
 
-import Landing from './pages/Landing'
+
+// import Play from './pages/signup';
+
 
 ReactDOM.render(
     <div>    
@@ -24,6 +29,9 @@ ReactDOM.render(
             <Route path='/logout' exact component={Logout} />
         </Router>
     </div>
+
+    // <Play/>
+
     ,document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
