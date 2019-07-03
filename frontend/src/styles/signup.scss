@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 #back-ground {
 
       background:url('../assets/img5.jpg') no-repeat center center fixed;
@@ -15,7 +15,18 @@
       width: 80%;
       // margin:0 auto;
 }
+.header {
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: -0.3px;
+      // margin:px;
+}
 
+.header-color {
+      color:rgb(104, 97, 97);
+}
+.social-media-icon{
+      font-size:30px;
+}
 @media only screen and (max-width: 45rem)
 {
       #back-ground {

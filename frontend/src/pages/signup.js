@@ -63,17 +63,18 @@ export default class FormExample extends React.Component {
                 <Card.Header>
                     <Nav variant="tabs" defaultActiveKey="#first">
                         <Nav.Item>
-                            <Nav.Link href="#first"><h4>Sign Up</h4></Nav.Link>
+                            <Nav.Link href="#first"><h4 className='header header-color'>Sign Up</h4></Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href="#link"><h4>Log In</h4></Nav.Link>
+                            <Nav.Link href="#link"><h4 className='header'>Log In</h4></Nav.Link>
                         </Nav.Item>
                     </Nav>
                 </Card.Header>
 
                 <Card.Body>
-                    <Card.Title>New here?</Card.Title>
-                    <Card.Text>
+                    
+                    <Card.Title className='header header-color'>New here?</Card.Title>
+                    <Card.Text className='header header-color'>
                     Sign up and discover great amount of new opportunities!
                     </Card.Text>
 
@@ -255,19 +256,26 @@ export default class FormExample extends React.Component {
                         </Form.Row>
                         
                         
-                        <ButtonToolbar>
+                        
 
                             <Button variant="outline-primary" size="lg" block type='submit'>
-                                submit
+                                Submit
                             </Button>
+                            
+                            <ButtonToolbar>
+                            
+                            <Card.Text className='header header-color' style={{ margin:'10px'}}>
+                                Or Join with
+                            </Card.Text>
+                            
                             <Button variant="primary" size="lg" block>
-                                connect with facebook
+                                 <i className="social-media-icon fab fa-facebook-square"></i>
                             </Button>
                             <Button variant="danger" size="lg" block>
-                                connect with google
+                                 <i className="social-media-icon fab fa-google"></i>
                             </Button>
                             <Button variant="info" size="lg" block>
-                                connect with twitter
+                                <i className="social-media-icon fab fa-twitter-square"></i>
                             </Button>
 
                         </ButtonToolbar>
